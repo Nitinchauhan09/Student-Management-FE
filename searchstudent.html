@@ -7,163 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Student</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Global Styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-
-        header {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin: 0;
-        }
-
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-
-        /* Main Content Section */
-        main {
-            padding: 20px;
-            margin-top: 80px;
-        }
-
-        .search-options {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .buttons button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .buttons button:hover {
-            background-color: #45a049;
-        }
-
-        .search-by-course, .fetch-all-students {
-            margin-top: 20px;
-        }
-
-        .search-by-course input {
-            padding: 8px;
-            width: 250px;
-            font-size: 1rem;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            margin-right: 10px;
-        }
-
-        .search-by-course button {
-            padding: 8px 15px;
-            font-size: 1rem;
-            border: none;
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .search-by-course button:hover {
-            background-color: #45a049;
-        }
-
-        /* Table Styling */
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        table th, table td {
-            padding: 12px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-
-        table th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        table tr:hover {
-            background-color: #ddd;
-        }
-
-        /* Responsive Table */
-        @media (max-width: 768px) {
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-
-            th {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-
-            tr {
-                border: 1px solid #ccc;
-                margin-bottom: 10px;
-            }
-
-            td {
-                border: none;
-                position: relative;
-                padding-left: 50%;
-                text-align: left;
-            }
-
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 0;
-                width: 50%;
-                padding-left: 10px;
-                font-weight: bold;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -181,12 +24,20 @@
                 <button onclick="showFetchAllSection()">Fetch All Students</button>
             </div>
 
-            <!-- Search by Course Form -->
-            <div class="search-by-course" id="searchCourseForm" style="display: none;">
+            <!-- First Search by Course Form -->
+            <div class="search-by-course" id="searchCourseForm1" style="display: none;">
                 <h3>Search by Course</h3>
-                <label for="course">Course:</label>
-                <input type="text" id="course" placeholder="Enter course name">
-                <button onclick="executeSearch()">Search</button>
+                <label for="course1">Course:</label>
+                <input type="text" id="course1" placeholder="Enter course name">
+                <button onclick="executeSearch('course1')">Search</button>
+            </div>
+
+            <!-- Second Search by Course Form -->
+            <div class="search-by-course" id="searchCourseForm2" style="display: none;">
+                <h3>Search by Course (Second Option)</h3>
+                <label for="course2">Course:</label>
+                <input type="text" id="course2" placeholder="Enter course name">
+                <button onclick="executeSearch('course2')">Search</button>
             </div>
 
             <!-- Fetch All Students Section -->
@@ -254,6 +105,24 @@
                 .catch(error => {
                     console.error("Error fetching student data:", error);
                 });
+        }
+
+        // Function to toggle between the search forms
+        function toggleSearchForm(formId) {
+            // Hide all search forms
+            document.getElementById("searchCourseForm1").style.display = "none";
+            document.getElementById("searchCourseForm2").style.display = "none";
+
+            // Show the selected form
+            document.getElementById(formId).style.display = "block";
+        }
+
+        // Function to execute the course search
+        function executeSearch(formId) {
+            const courseInput = document.getElementById(formId).value;
+            console.log(`Searching for students in course: ${courseInput}`);
+
+            // Add your search logic here (e.g., fetching data from an API)
         }
     </script>
 </body>
