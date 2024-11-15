@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Spring Boot Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Welcome to My Spring Boot Application</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#data">Data</a></li>
+                <li><a href="#form">Submit</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <!-- Home Section -->
+        <section id="home">
+            <h2>Home</h2>
+            <p>Welcome to the homepage of our Spring Boot application. Use the navigation bar to explore.</p>
+        </section>
+
+        <!-- Data Display Section -->
+        <section id="data">
+            <h2>Data</h2>
+            <p>Here you can display data fetched from your Spring Boot backend:</p>
+            <div class="data-container">
+                <!-- Data items will be populated here -->
+                <div class="data-item">
+                    <h3>Item Title</h3>
+                    <p>Description of the item or any relevant data.</p>
+                </div>
+                <!-- Add more data items as needed -->
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <div class="form-container">
+            <h2>Student Request Form</h2>
+            <form id="studentForm" onsubmit="submitForm(event)">
+                <label for="id">ID:</label>
+                <input type="number" id="id" name="id" required>
+    
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+    
+                <label for="course">Course:</label>
+                <input type="text" id="course" name="course" required>
+    
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+    
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+    
+                <label for="enrolementNum">Enrolment Number:</label>
+                <input type="text" id="enrolementNum" name="enrolementNum" required>
+    
+                <button type="submit">Submit</button>
+            </form>
+            <p id="responseMessage"></p>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 My Spring Boot Project. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript function to handle form submission
+        function submitForm(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            console.log("Form Submit Triggered");
+
+            // Collect form data
+            const studentRequest = {
+                id: document.getElementById("id").value,
+                name: document.getElementById("name").value,
+                course: document.getElementById("course").value,
+                address: document.getElementById("address").value,
+                dob: document.getElementById("dob").value,
+                enrolementNum: document.getElementById("enrolementNum").value
+            };
+
+            console.log("Form Data:", studentRequest);
+
+            // Send data to the backend using fetch
+            fetch("http://localhost:8080/student/save", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(studentRequest)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response Data:", data);
+                document.getElementById("responseMessage").innerText = "Student saved successfully!";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("responseMessage").innerText = "An error occurred. Please try again.";
+            });
+        }
+    </script>
+</body>
+
+</html>
